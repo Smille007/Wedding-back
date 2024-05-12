@@ -1,21 +1,16 @@
-const cors = require("cors");
 const express = require("express");
+const cors = require("cors");
 const app = express();
+const rsvpController = require('./controllers/rsvpController');
+
 app.use(cors());
 app.use(express.json());
-const postController = require('./controllers/postController.js')
 
-
-
-app.use('/posts', postController);
-
-
+// Mount the rsvpController middleware
+app.use('/', rsvpController);
 
 app.get("/", (req, res) => {
-    res.send("Welcome to Daryna's wedding website");
-  });
-  app.get("*", (req, res) => {
-    res.status(404).send("Page not found");
-  });
+    res.json("Welcome to Daryna's wedding website");
+});
 
 module.exports = app;
