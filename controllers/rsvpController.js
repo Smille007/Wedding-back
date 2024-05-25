@@ -3,17 +3,15 @@ require("dotenv").config()
 const rsvp = express.Router()
 const { getRsvp, getOneRsvp, postRsvp } = require('../queries/rsvp')
 
-// GET all RSVPs
-rsvp.get('/rsvp', async (req, res) => {
+rsvp.get('/', async (req, res) => {
     try {
-        // Fetch rsvp_id from query params or use undefined
-        const rsvp_id = req.query.rsvp_id;
-        const rsvps = await getRsvp(rsvp_id);
-        res.status(200).json({ data: rsvps });
-    } catch (error) {
-        res.status(500).json({ error: "Internal Server Error" });
+        const rsvps = await getRsvp();
+        res.status(200).json(rsvps);
+    } catch (err) {
+        res.status(500).json({ error: "Error fetching RSVPs", message: err.message });
     }
 });
+
 
 // GET a single RSVP by ID
 rsvp.get("/:id", async (req, res) => {
@@ -27,7 +25,7 @@ rsvp.get("/:id", async (req, res) => {
 });
 
 // POST a new RSVP
-rsvp.post('/rsvp', async (req, res) => {
+rsvp.post('/', async (req, res) => {
     try {
         // Validate and sanitize req.body here before using it in postRsvp
         const createRsvp = await postRsvp(req.body);

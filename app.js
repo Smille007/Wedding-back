@@ -1,13 +1,18 @@
+// DEPENDENCIES
 const express = require("express");
 const cors = require("cors");
-const app = express();
 const rsvpController = require('./controllers/rsvpController');
 
+// CONFIGURATION
+require("dotenv").config();
+const app = express();
+
+// MIDDLEWARE
 app.use(cors());
 app.use(express.json());
 
-// Mount the rsvpController middleware
-app.use('/', rsvpController);
+// ROUTES
+app.use('/rsvp', rsvpController);
 
 app.get("/", (req, res) => {
     res.json("Welcome to Daryna's wedding website");
