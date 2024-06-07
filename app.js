@@ -6,7 +6,7 @@ const rsvpController = require('./controllers/rsvpController');
 app.use(cors());
 app.use(express.json());
 // Mount the rsvpController middleware under the /rsvp path
-app.use('/', rsvpController);
+app.use('/rsvp', rsvpController);
 
 
 
@@ -15,3 +15,4 @@ app.get("/", (req, res) => {
 });
 
 module.exports = app;
+    
