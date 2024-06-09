@@ -9,22 +9,13 @@
 // app.listen(PORT, () => {
 //   console.log(`Listening on port ${PORT}`);
 // });
-require('dotenv').config();
-const { Pool } = require('pg');
+const app = require('./app')
+require('dotenv').config()
 
-const pool = new Pool({
-  connectionString: process.env.DATABASE_URL
-});
+const PORT = process.env.DATABASE_URL || 4005
 
-// Test the database connection
-pool.connect((err, client, release) => {
-  if (err) {
-    console.error('Error connecting to the database:', err.message);
-  } else {
-    console.log('Connected to the database successfully!');
-  }
-  release(); // Release the client back to the pool
-});
+app.listen(PORT, () => {
+    console.log(`Server is running on port: ${PORT}`)
+})
 
-module.exports = pool;
 
