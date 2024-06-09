@@ -9,13 +9,14 @@
 // app.listen(PORT, () => {
 //   console.log(`Listening on port ${PORT}`);
 // });
-const app = require('./app')
-require('dotenv').config()
+require('dotenv').config();
+const express = require('express');
+const app = express();
+const port = process.env.PORT || 4005; // Use the PORT environment variable or fallback to 4005
 
-const PORT = process.env.DATABASE_URL
+app.listen(port, () => {
+  console.log(`Server is running on port ${port}`);
+});
 
-app.listen(PORT, () => {
-    console.log(`Server is running on port: ${PORT}`)
-})
 
 
