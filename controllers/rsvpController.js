@@ -25,7 +25,7 @@ rsvp.get("/:id", async (req, res) => {
 });
 
 // POST a new RSVP
-rsvp.post('/rsvp', async (req, res) => {
+rsvp.post('/', async (req, res) => {
     try {
         // Validate and sanitize req.body here before using it in postRsvp
         const createRsvp = await postRsvp(req.body);
