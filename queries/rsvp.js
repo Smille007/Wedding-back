@@ -5,7 +5,7 @@ const getRsvp = async () => {
         const rsvps = await db.any("SELECT * FROM rsvp");
         return rsvps;
     } catch (err) {
-        console.error("Error fetching RSVPs:", err);
+        console.error("Error fetching rsvp:", err);
         throw new Error("Error fetching rsvp");
     }
 };
@@ -15,8 +15,8 @@ const getOneRsvp = async (rsvpId) => {
         const rsvp = await db.one("SELECT * FROM rsvp WHERE rsvp_id = $1", rsvpId);
         return rsvp;
     } catch (err) {
-        console.error("Error fetching RSVP:", err);
-        throw new Error("Error fetching RSVP");
+        console.error("Error fetching rsvp:", err);
+        throw new Error("Error fetching rsvp");
     }
 };
 
@@ -32,8 +32,8 @@ const postRsvp = async (rsvpData) => {
         );
         return newRsvp;
     } catch (err) {
-        console.error("Error creating RSVP:", err);
-        throw new Error("Failed to create RSVP. Please try again later.");
+        console.error("Error creating rsvp:", err);
+        throw new Error("Failed to create rsvp. Please try again later.");
     }
 };
 
