@@ -22,7 +22,7 @@ app.use(cors());
 app.use(express.json());
 
 // Mount the rsvpController middleware under the /rsvp path
-app.use('/rsvp', rsvpController);
+app.use('/', rsvpController);
 
 // Route for the homepage
 app.get("/", (req, res) => {
