@@ -8,7 +8,7 @@ rsvp.get('/', async (req, res) => {
         const rsvps = await getRsvp();
         res.status(200).json(rsvps);
     } catch (err) {
-        res.status(500).json({ error: "Error fetching RSVPs", message: err.message });
+        res.status(500).json({ error: "Error fetching rsvps", message: err.message });
     }
 });
 
@@ -20,7 +20,7 @@ rsvp.get("/:id", async (req, res) => {
     if (oneRsvp) {
         res.status(200).json(oneRsvp);
     } else {
-        res.status(404).json({ error: "RSVP not found" });
+        res.status(404).json({ error: "rsvp not found" });
     }
 });
 
