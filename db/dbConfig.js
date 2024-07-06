@@ -16,7 +16,14 @@
 const pgp = require('pg-promise')();
 require('dotenv').config();
 
-const db = pgp(process.env.DATABASE_URL);
+const dbConfig = {
+    connectionString: process.env.DATABASE_URL,
+    ssl: {
+        rejectUnauthorized: false // Set to true in production with a valid SSL certificate
+    }
+};
+
+const db = pgp(dbConfig);
 
 // Test the database connection
 db.connect()
@@ -28,4 +35,5 @@ db.connect()
   });
 
 module.exports = db;
+
 
