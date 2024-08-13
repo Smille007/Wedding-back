@@ -1,7 +1,7 @@
 const express = require('express');
-require("dotenv").config()
-const rsvp = express.Router()
-const { getRsvp, getOneRsvp, postRsvp } = require('../queries/rsvp')
+const rsvp = express.Router();
+const { getRsvp, getOneRsvp, postRsvp } = require('../queries/rsvp');
+const { checkFullName, checkEmail, checkGuests } = require('../validations/checkRSVP');
 
 rsvp.get('/', async (req, res) => {
     try {
@@ -12,26 +12,32 @@ rsvp.get('/', async (req, res) => {
     }
 });
 
-
 // GET a single RSVP by ID
-rsvp.get("/:id", async (req, res) => {
+rsvp.get('/:id', async (req, res) => {
     const id = req.params.id;
-    const oneRsvp = await getOneRsvp(id);
-    if (oneRsvp) {
-        res.status(200).json(oneRsvp);
-    } else {
-        res.status(404).json({ error: "rsvp not found" });
+    try {
+        const oneRsvp = await getOneRsvp(id);
+        if (oneRsvp) {
+            res.status(200).json(oneRsvp);
+        } else {
+            res.status(404).json({ error: "RSVP not found" });
+        }
+    } catch (err) {
+        res.status(500).json({ error: "Error fetching RSVP", message: err.message });
     }
 });
 
 // POST a new RSVP
-rsvp.post('/', async (req, res) => {
+rsvp.post('/', checkFullName, checkEmail, checkGuests, async (req, res) => { 
     try {
-        // Validate and sanitize req.body here before using it in postRsvp
         const createRsvp = await postRsvp(req.body);
         res.status(201).json({ data: createRsvp });
     } catch (err) {
-        res.status(500).json({ error: "Invalid Information", info: err.message });
+        if (err.message === 'All fields are required') {
+            res.status(400).json({ error: "Invalid Information", info: err.message });
+        } else {
+            res.status(500).json({ error: "Server Error", info: err.message });
+        }
     }
 });
 
